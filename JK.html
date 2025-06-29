@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Card विवरण</title>
+  <style>
+    body {
+font-family: 'Segoe UI', sans-serif;
+margin: 0;
+padding: 0;
+background-color: #f8f8f8;
+}
+header {
+background-color: #007B8A;
+color: white;
+padding: 10px 20px;
+font-weight: bold;
+font-size: 18px;
+text-align: left;
+}
+.navbar {
+background-color: #005F6B;
+color: white;
+padding: 10px 20px;
+text-align: center;
+}
+.container {
+background-color: white;
+max-width: 1000px;
+margin: 30px auto;
+padding: 20px;
+border: 1px solid #ccc;
+border-radius: 8px;
+}
+.form-section {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+align-items: center;
+margin-bottom: 20px;
+}
+select, input[type="text"], button {
+padding: 8px;
+border-radius: 4px;
+border: 1px solid #aaa;
+}
+button {
+background-color: #007B8A;
+color: white;
+border: none;
+cursor: pointer;
+}
+button:hover {
+background-color: #005F6B;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+}
+th, td {
+border: 1px solid #bbb;
+padding: 8px;
+text-align: center;
+}
+th {
+background-color: #00394d;
+color: white;
+}
+.footer {
+text-align: center;
+font-size: 12px;
+background-color: #007B8A;
+color: white;
+padding: 10px;
+margin-top: 30px;
+}
+.back-btn {
+margin-top: 20px;
+display: block;
+background-color: #00394d;
+color: white;
+padding: 10px 20px;
+text-align: center;
+width: 150px;
+border-radius: 5px;
+text-decoration: none;
+margin-left: auto;
+margin-right: auto;
+}
+</style>
+</head>
+
+<body>
+
+<header>मुख्यमंत्री शहरी रोजगार गारंटी योजना</header>
+
+<div class="container">
+  <h2>जॉब कार्ड का विवरण</h2>
+
+  <label for="year">वित्तीय वर्ष:</label>
+  <select id="year">
+    <option value="2025">2025</option>
+    <option value="2024">2024</option>
+    <option value="2023">2023</option>
+    <option value="2022">2022</option>
+    
+    
+  </select>
+
+  <label for="cardNumber">जॉब कार्ड नंबर दर्ज करें:</label>
+  <input type="text" id="cardNumber" placeholder=" Enter your jobcrad" />
+  <button onclick="search()">खोजे</button>
+
+  <table id="jobTable">
+    <thead>
+      <tr>
+        <th>क्र.</th>
+        <th>मुख्य का नाम</th>
+        <th>कार्यों का नाम</th>
+        <th>मस्टर कोड</th>
+        <th>मस्टर आरंभ तिथि</th>
+        <th>आवश्यक दिन</th>
+        <th>उपस्थिति दिन</th>
+        <th>अनुपस्थिति दिन</th>
+        <th>आवधिक दिन (Verified)</th>
+        <th>भुगतान स्थिति</th>
+      </tr>
+    </thead>
+    <tbody id="jobBody">
+      <!-- Results will be inserted here -->
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  Website by Dept. of IT & Comm., Govt. of Rajasthan
+</div>
+
+<script>
+    const sampleData1 = [ {
+      name: 'सरला',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/502896',
+      date: '16/06/2025',
+      required: 13,
+      present: 10,
+      absent: 3,
+      verified: 13,
+      payment: 'NOT PAID'
+    },
+    {
+      name: 'सरला',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/488119',
+      date: '16/05/2025',
+      required: 14,
+      present: 14,
+      absent: 0,
+      verified: 14,
+      payment: 'NOT PAID'
+    },
+    {
+      name: 'सरला',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/493244',
+      date: '01/06/2025',
+      required: 12,
+      present: 11,
+      absent: 1,
+      verified: 12,
+      payment: 'NOT PAID'
+    },
+    {
+      name: 'सरला',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/484057',
+      date: '01/05/2025',
+      required: 13,
+      present: 13,
+      absent: 0,
+      verified: 13,
+      payment: 'NOT PAID'
+    },
+        {
+      name: 'सरला',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/484057',
+      date: '01/05/2025',
+      required: 14,
+      present: 0,
+      absent: 0,
+      verified: 14,
+      payment: 'NOT PAID'
+    }
+        
+    ];
+    const sampleData2 = [ {
+      name: 'रावण',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/502896',
+      date: '16/06/2025',
+      required: 13,
+      present: 10,
+      absent: 3,
+      verified: 13,
+      payment: 'NOT PAID'
+    },
+    {
+      name: 'रावण',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/488119',
+      date: '16/05/2025',
+      required: 14,
+      present: 14,
+      absent: 0,
+      verified: 14,
+      payment: 'NOT PAID'
+    },
+    {
+      name: 'रावण',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/493244',
+      date: '01/06/2025',
+      required: 12,
+      present: 11,
+      absent: 1,
+      verified: 12,
+      payment: 'NOT PAID'
+    },
+    {
+      name: 'रावण',
+      work: 'Johad excavation work at bheru sagar',
+      code: 'MR/2025-26/484057',
+      date: '01/05/2025',
+      required: 13,
+      present: 13,
+      absent: 0,
+      verified: 13,
+      payment: 'NOT PAID'
+    } ];
+    
+    function search() {
+        const cardNumber = document.getElementById("cardNumber").value.trim();
+        const tbody = document.getElementById("jobBody");
+        tbody.innerHTML = "";
+        
+        let dataToShow = [];
+        
+        if (cardNumber === "Jc20235810000560284") {
+            dataToShow = sampleData1;
+        } else if (cardNumber === "Jc20235810000560285") {
+            dataToShow = sampleData2;
+        }
+        
+        if (dataToShow.length > 0) {
+            dataToShow.forEach((item, index) => {
+                tbody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${item.name}</td>
+            <td>${item.work}</td>
+            <td>${item.code}</td>
+            <td>${item.date}</td>
+            <td>${item.required}</td>
+            <td>${item.present}</td>
+            <td>${item.absent}</td>
+            <td>${item.verified}</td>
+            <td>${item.payment}</td>
+          </tr>`;
+            });
+        } else {
+            tbody.innerHTML = `<tr><td colspan="10">कोई रिकॉर्ड नहीं मिला</td></tr>`;
+        }
+    }
+</script>
+
+</body>
+
+</html>
